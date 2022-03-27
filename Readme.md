@@ -1,1 +1,1 @@
-Proje aşama aşaha branchler üzerinden ilerlemektedir.
+Proje aşama aşama branchler üzerinden ilerlemektedir.
