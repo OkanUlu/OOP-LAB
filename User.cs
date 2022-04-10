@@ -12,21 +12,33 @@ namespace OOP_LAB
     {
         public string UserName { get; set; }
         public string Password { get; set; }
-       /* public string Difficulty { get; set; }
-        public int Customint1 { get; set; }
-        public int Customint2 { get; set; }*/
+        public string Namesurname { get; set; }
+        public string Phonenumber { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public string Country { get; set; }
+        public string Email { get; set; }
+        
 
 
-        public User(string username, string password)
+
+        public User(string username, string password, string namesurname, string phonenumber, string address, string city, string country, string email)
         {
             UserName = username;
             Password = password;
+            Namesurname = namesurname;
+            Phonenumber = phonenumber;
+            Address = address;
+            City = city;
+            Country = country;
+            Email = email;
+
         }
 
-        /*public string ToStringCsv()
+        public string ToStringCsv()
         {
-            return UserName + "," + Password;
-        }*/
+            return UserName + "," + Password + "," + Namesurname + "," + Phonenumber + "," + Address + "," + City + "," + Country + "," + Email;
+        }
     }
 
 

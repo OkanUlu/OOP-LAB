@@ -37,6 +37,7 @@ namespace OOP_LAB {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool square {
             get {
                 return ((bool)(this["square"]));
@@ -48,6 +49,7 @@ namespace OOP_LAB {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool triangle {
             get {
                 return ((bool)(this["triangle"]));
@@ -59,6 +61,7 @@ namespace OOP_LAB {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
         public bool roundshape {
             get {
                 return ((bool)(this["roundshape"]));
@@ -70,6 +73,7 @@ namespace OOP_LAB {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int customint1 {
             get {
                 return ((int)(this["customint1"]));
@@ -81,12 +85,97 @@ namespace OOP_LAB {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
         public int customint2 {
             get {
                 return ((int)(this["customint2"]));
             }
             set {
                 this["customint2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool renk1 {
+            get {
+                return ((bool)(this["renk1"]));
+            }
+            set {
+                this["renk1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool renk2 {
+            get {
+                return ((bool)(this["renk2"]));
+            }
+            set {
+                this["renk2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool renk3 {
+            get {
+                return ((bool)(this["renk3"]));
+            }
+            set {
+                this["renk3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Blue")]
+        public global::System.Drawing.Color color1 {
+            get {
+                return ((global::System.Drawing.Color)(this["color1"]));
+            }
+            set {
+                this["color1"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Purple")]
+        public global::System.Drawing.Color color2 {
+            get {
+                return ((global::System.Drawing.Color)(this["color2"]));
+            }
+            set {
+                this["color2"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Orange")]
+        public global::System.Drawing.Color color3 {
+            get {
+                return ((global::System.Drawing.Color)(this["color3"]));
+            }
+            set {
+                this["color3"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string lastuser {
+            get {
+                return ((string)(this["lastuser"]));
+            }
+            set {
+                this["lastuser"] = value;
             }
         }
     }

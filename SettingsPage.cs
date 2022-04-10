@@ -17,6 +17,7 @@ namespace OOP_LAB
         public string Difficulty;
         public int int1, int2;
         public bool chk1, chk2, chk3;
+        public bool chk4, chk5, chk6;
         public SettingsPage()
         {
             InitializeComponent();
@@ -37,18 +38,21 @@ namespace OOP_LAB
                     customToolStripMenuItem.Checked = true;
                     break;
             }
-            if(Settings.Default.square == null || Settings.Default.triangle == null || Settings.Default.roundshape == null)
+            /*if(Settings.Default.square == null || Settings.Default.triangle == null || Settings.Default.roundshape == null)
             {
                 Settings.Default.square = false;
                 Settings.Default.triangle = false;
                 Settings.Default.roundshape = false;
-            }
-            else
-            {
-                checkBox1.Checked = Settings.Default.square;
-                checkBox2.Checked = Settings.Default.triangle;
-                checkBox3.Checked = Settings.Default.roundshape;
-            }
+            }*/
+
+            checkBox1.Checked = Settings.Default.square;
+            checkBox2.Checked = Settings.Default.triangle;
+            checkBox3.Checked = Settings.Default.roundshape;
+
+            checkBox4.Checked = Settings.Default.renk1; //tekrar başladığında eski seçimi döndürmek için
+            checkBox5.Checked = Settings.Default.renk2;
+            checkBox6.Checked = Settings.Default.renk3;
+
 
 
             toolStripTextBox2.Text = Settings.Default.customint2.ToString();
@@ -58,6 +62,9 @@ namespace OOP_LAB
             chk2 = Settings.Default.triangle;
             chk3 = Settings.Default.roundshape;
 
+            label4.ForeColor = Settings.Default.color1;
+            label5.ForeColor = Settings.Default.color2;
+            label6.ForeColor = Settings.Default.color3;
 
 
         }
@@ -164,6 +171,7 @@ namespace OOP_LAB
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
             chk1 = checkBox1.Checked;
+
         }
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
@@ -174,6 +182,26 @@ namespace OOP_LAB
         private void checkBox3_CheckedChanged(object sender, EventArgs e)
         {
             chk3 = checkBox3.Checked;
+        }
+
+        private void checkBox4_CheckedChanged(object sender, EventArgs e)
+        {
+            chk4= checkBox4.Checked;
+        }
+
+        private void SettingsPage_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void checkBox5_CheckedChanged(object sender, EventArgs e)
+        {
+           chk5 = checkBox5.Checked;
+        }
+
+        private void checkBox6_CheckedChanged(object sender, EventArgs e)
+        {
+            chk6= checkBox6.Checked;
         }
 
         private void toolStripTextBox1_Click(object sender, EventArgs e)
@@ -194,6 +222,9 @@ namespace OOP_LAB
             Settings.Default.square = chk1;
             Settings.Default.triangle = chk2;
             Settings.Default.roundshape = chk3;
+            Settings.Default.renk1 = chk4;
+            Settings.Default.renk2 = chk5;
+            Settings.Default.renk3 = chk6;
             Settings.Default.Save();
 
         }
