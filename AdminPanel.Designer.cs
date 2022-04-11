@@ -489,6 +489,7 @@
             this.Controls.Add(this.txt_userlistbox_admin);
             this.Name = "AdminPanel";
             this.Text = "AdminPanel";
+            this.Load += new System.EventHandler(this.AdminPanel_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
