@@ -217,6 +217,7 @@
             this.Controls.Add(this.txt_username);
             this.Name = "SignUp";
             this.Text = "SignUp";
+            this.Load += new System.EventHandler(this.SignUp_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

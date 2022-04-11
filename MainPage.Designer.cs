@@ -31,6 +31,7 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainPage));
             this.button1 = new System.Windows.Forms.Button();
             this.btn_profilescreen = new System.Windows.Forms.Button();
+            this.button2 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -55,11 +56,22 @@
             this.btn_profilescreen.UseVisualStyleBackColor = true;
             this.btn_profilescreen.Click += new System.EventHandler(this.btn_profilescreen_Click);
             // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(667, 134);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(116, 29);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "AboutScreen";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.button2);
             this.Controls.Add(this.btn_profilescreen);
             this.Controls.Add(this.button1);
             this.Name = "MainPage";
@@ -73,5 +85,6 @@
         private ToolStripMenuItem customToolStripMenuItem1;
         private Button button1;
         private Button btn_profilescreen;
+        private Button button2;
     }
 }

@@ -35,5 +35,11 @@ namespace OOP_LAB
             ProfileScreen profileScreen = new ProfileScreen();
             profileScreen.ShowDialog();
         }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Form1 aboutScreen = new Form1();
+            aboutScreen.ShowDialog();
+        }
     }
 }

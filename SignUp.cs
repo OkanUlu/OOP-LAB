@@ -29,11 +29,16 @@ namespace OOP_LAB
         private void btn_SignUp_after_Click(object sender, EventArgs e)
         {
             byte[] bitDizisi = System.Text.Encoding.UTF8.GetBytes(txt_password.Text);
-            string sifreliVeri = Convert.ToBase64String(sha256.ComputeHash(bitDizisi));
+            string sifreliVeri = Convert.ToBase64String(sha256.ComputeHash(bitDizisi));  //stringe dönüştürdü şifreyi
 
             User Usersignup = new User(txt_username.Text, sifreliVeri, txt_namesurname.Text, txt_phonenumber.Text, txt_address.Text, txt_city.Text, txt_country.Text, txt_email.Text);
             userlist.Add(Usersignup);
             Util.SaveCsv(userlist);  
+        }
+
+        private void SignUp_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
