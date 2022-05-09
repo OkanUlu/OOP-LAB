@@ -253,10 +253,10 @@
             // 
             this.label2.AutoSize = true;
             this.label2.BackColor = System.Drawing.Color.Bisque;
-            this.label2.Font = new System.Drawing.Font("Century Schoolbook", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label2.Location = new System.Drawing.Point(379, 28);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(114, 22);
+            this.label2.Size = new System.Drawing.Size(116, 22);
             this.label2.TabIndex = 15;
             this.label2.Text = "Choose color";
             // 
@@ -264,10 +264,10 @@
             // 
             this.label3.AutoSize = true;
             this.label3.BackColor = System.Drawing.Color.Bisque;
-            this.label3.Font = new System.Drawing.Font("Century Schoolbook", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.label3.Location = new System.Drawing.Point(652, 28);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(122, 22);
+            this.label3.Size = new System.Drawing.Size(126, 22);
             this.label3.TabIndex = 15;
             this.label3.Text = "Choose shape";
             // 
@@ -322,6 +322,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Name = "SettingsPage";
             this.Text = "SettingsPage";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SettingsPage_FormClosed);
             this.Load += new System.EventHandler(this.SettingsPage_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();

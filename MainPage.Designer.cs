@@ -32,13 +32,15 @@
             this.button1 = new System.Windows.Forms.Button();
             this.btn_profilescreen = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
+            this.scorelbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
             // 
             this.button1.Image = ((System.Drawing.Image)(resources.GetObject("button1.Image")));
             this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.button1.Location = new System.Drawing.Point(667, 31);
+            this.button1.Location = new System.Drawing.Point(1079, 50);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(121, 29);
             this.button1.TabIndex = 5;
@@ -48,7 +50,7 @@
             // 
             // btn_profilescreen
             // 
-            this.btn_profilescreen.Location = new System.Drawing.Point(667, 66);
+            this.btn_profilescreen.Location = new System.Drawing.Point(1079, 85);
             this.btn_profilescreen.Name = "btn_profilescreen";
             this.btn_profilescreen.Size = new System.Drawing.Size(121, 29);
             this.btn_profilescreen.TabIndex = 6;
@@ -58,19 +60,42 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(667, 134);
+            this.button2.Location = new System.Drawing.Point(1079, 120);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(116, 29);
+            this.button2.Size = new System.Drawing.Size(121, 29);
             this.button2.TabIndex = 7;
-            this.button2.Text = "AboutScreen";
+            this.button2.Text = "ABOUT";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label1.Location = new System.Drawing.Point(1079, 162);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(121, 46);
+            this.label1.TabIndex = 8;
+            this.label1.Text = "SCORE";
+            // 
+            // scorelbl
+            // 
+            this.scorelbl.AutoSize = true;
+            this.scorelbl.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.scorelbl.ForeColor = System.Drawing.Color.Red;
+            this.scorelbl.Location = new System.Drawing.Point(1119, 218);
+            this.scorelbl.Name = "scorelbl";
+            this.scorelbl.Size = new System.Drawing.Size(38, 46);
+            this.scorelbl.TabIndex = 9;
+            this.scorelbl.Text = "0";
             // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1216, 814);
+            this.Controls.Add(this.scorelbl);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.btn_profilescreen);
             this.Controls.Add(this.button1);
@@ -78,6 +103,7 @@
             this.Text = "Form2";
             this.Load += new System.EventHandler(this.MainPage_Load);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -86,5 +112,7 @@
         private Button button1;
         private Button btn_profilescreen;
         private Button button2;
+        private Label label1;
+        private Label scorelbl;
     }
 }
