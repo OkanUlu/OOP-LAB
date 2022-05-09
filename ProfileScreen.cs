@@ -68,10 +68,5 @@ namespace OOP_LAB
             
 
         }
-
-        private void ProfileScreen_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace OOP_LAB
 {
-    
+
     public partial class SettingsPage : Form
     {
         private User user;
@@ -74,16 +74,20 @@ namespace OOP_LAB
             User user;
             user = LoginUser.getInstance().User;
 
-            Settings.Default.Difficulty = "easy";
-            Settings.Default.Save();
+            //Settings.Default.Difficulty = "easy";
+            //Settings.Default.Save();
+            Difficulty = "easy";
+            normalToolStripMenuItem.Checked = false;
             easyToolStripMenuItem.Checked = true;
+            hardToolStripMenuItem.Checked = false;
+            customToolStripMenuItem.Checked = false;
         }
 
         private void normalToolStripMenuItem_Click(object sender, EventArgs e)
         {
             User user;
             user = LoginUser.getInstance().User;
-
+            Difficulty = "normal";
             normalToolStripMenuItem.Checked = true;
             easyToolStripMenuItem.Checked = false;
             hardToolStripMenuItem.Checked = false;
@@ -96,7 +100,7 @@ namespace OOP_LAB
             user = LoginUser.getInstance().User;
 
             Difficulty = "hard";
-            hardToolStripMenuItem.Checked = true;         
+            hardToolStripMenuItem.Checked = true;
             easyToolStripMenuItem.Checked = false;
             normalToolStripMenuItem.Checked = false;
             customToolStripMenuItem.Checked = false;
@@ -127,7 +131,7 @@ namespace OOP_LAB
             }
         }
         //Square,triangle,rounshape seçimleri yapılır.
-        public void square_Click(object sender, EventArgs e) 
+        public void square_Click(object sender, EventArgs e)
         {
             if (checkBox1.Checked)
             {
@@ -136,7 +140,7 @@ namespace OOP_LAB
             else
             {
                 checkBox1.Checked = true;
-                
+
             }
             chk1 = checkBox1.Checked;
 
@@ -146,12 +150,12 @@ namespace OOP_LAB
             if (checkBox2.Checked)
             {
                 checkBox2.Checked = false;
-                
+
             }
             else
             {
                 checkBox2.Checked = true;
-                
+
             }
             chk2 = checkBox2.Checked;
         }
@@ -186,7 +190,7 @@ namespace OOP_LAB
 
         private void checkBox4_CheckedChanged(object sender, EventArgs e)
         {
-            chk4= checkBox4.Checked;
+            chk4 = checkBox4.Checked;
         }
 
         private void SettingsPage_Load(object sender, EventArgs e)
@@ -196,12 +200,20 @@ namespace OOP_LAB
 
         private void checkBox5_CheckedChanged(object sender, EventArgs e)
         {
-           chk5 = checkBox5.Checked;
+            chk5 = checkBox5.Checked;
+        }
+
+        private void SettingsPage_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            MainPage main = new MainPage();
+            main.Page_Refresh();
+            this.Hide();
+            main.ShowDialog();
         }
 
         private void checkBox6_CheckedChanged(object sender, EventArgs e)
         {
-            chk6= checkBox6.Checked;
+            chk6 = checkBox6.Checked;
         }
 
         private void toolStripTextBox1_Click(object sender, EventArgs e)
@@ -216,18 +228,52 @@ namespace OOP_LAB
         //Uygulamanın genel save i oluşturulur.
         private void btnSave_Click(object sender, EventArgs e)
         {
-            Settings.Default.Difficulty = Difficulty;
-            Settings.Default.customint1 = int1;
-            Settings.Default.customint2 = int2;
-            Settings.Default.square = chk1;
-            Settings.Default.triangle = chk2;
-            Settings.Default.roundshape = chk3;
-            Settings.Default.renk1 = chk4;
-            Settings.Default.renk2 = chk5;
-            Settings.Default.renk3 = chk6;
-            Settings.Default.Save();
+            int counter = 0;
+            if(chk1 == true)
+            {
+                counter++;
+            }
+            if(chk2 == true)
+            {
+                counter++;
+            }
+            if(chk3 == true)
+            {
+                counter++;
+            }
+            if(chk4 == true)
+            {
+                counter++;
+            }
+            if(chk5 == true)
+            {
+                counter++;
+            }
+            if (chk6 == true)
+            {
+                counter++;
+            }
+
+
+            if(counter < 3)
+            {
+                MessageBox.Show("En az 3 şekil veya renk seçmelisiniz, LÜTFEN TEKRAR SEÇİM YAPINIZ");
+            }
+            else
+            {
+                Settings.Default.Difficulty = Difficulty;
+                Settings.Default.customint1 = int1;
+                Settings.Default.customint2 = int2;
+                Settings.Default.square = chk1;
+                Settings.Default.triangle = chk2;
+                Settings.Default.roundshape = chk3;
+                Settings.Default.renk1 = chk4;
+                Settings.Default.renk2 = chk5;
+                Settings.Default.renk3 = chk6;
+                Settings.Default.Save();
+            }
+            
 
         }
-
     }
 }
