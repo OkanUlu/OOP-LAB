@@ -34,9 +34,10 @@ namespace OOP_LAB
                     AdminPanel adminpanel = new AdminPanel();
                     Settings.Default.lastuser = Username;
                     Settings.Default.Save();
-                    a = 1;  //flag 
+                    a = 1;
                     adminpanel.ShowDialog();
                     
+
                     LblLoginMessage.Visible = false;
                     break;
                 }
@@ -51,7 +52,8 @@ namespace OOP_LAB
                     // this.Hide();
                     a = 1;
                     main.ShowDialog();
-                   
+                    
+
                     LblLoginMessage.Visible = false;
                     break;
 
@@ -100,5 +102,6 @@ namespace OOP_LAB
 
             && !char.IsSeparator(e.KeyChar);
         }
+        
     }
 }

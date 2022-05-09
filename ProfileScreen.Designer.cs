@@ -274,7 +274,6 @@
             this.Controls.Add(this.lbl_user);
             this.Name = "ProfileScreen";
             this.Text = "ProfileScreen";
-            this.Load += new System.EventHandler(this.ProfileScreen_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

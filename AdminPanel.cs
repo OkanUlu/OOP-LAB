@@ -22,7 +22,7 @@ namespace OOP_LAB
             userlist = LoginPage.UserList;
             
             InitializeComponent();
-            userlistrenew();   //sürekli güncellemek için
+            userlistrenew();
 
 
         }
@@ -104,11 +104,6 @@ namespace OOP_LAB
                     userlistrenew();
                     break;
                 }
-
-        }
-
-        private void AdminPanel_Load(object sender, EventArgs e)
-        {
 
         }
     }
