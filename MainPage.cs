@@ -471,6 +471,13 @@ namespace OOP_LAB
                 btn[painteddots[iN]].BackColor = SystemColors.Control;
             }
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            HelpScreen help = new HelpScreen();
+            help.ShowDialog();
+        }
+
         private void GameScoreEngine()
         {
             for(int iN = 0;iN < col; iN++)
@@ -526,11 +533,5 @@ namespace OOP_LAB
                 Environment.Exit(0);
             }
         }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Form1 aboutScreen = new Form1();
-            aboutScreen.ShowDialog();
         }
     }
