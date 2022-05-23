@@ -34,6 +34,8 @@
             this.button2 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.scorelbl = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button1
@@ -89,11 +91,33 @@
             this.scorelbl.TabIndex = 9;
             this.scorelbl.Text = "0";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label2.Location = new System.Drawing.Point(1064, 264);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(148, 25);
+            this.label2.TabIndex = 10;
+            this.label2.Text = "Your best score";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Segoe UI", 20F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.label3.Location = new System.Drawing.Point(1119, 306);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(0, 46);
+            this.label3.TabIndex = 11;
+            // 
             // MainPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1216, 814);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.label2);
             this.Controls.Add(this.scorelbl);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button2);
@@ -114,5 +138,7 @@
         private Button button2;
         private Label label1;
         private Label scorelbl;
+        private Label label2;
+        private Label label3;
     }
 }

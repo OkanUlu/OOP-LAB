@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 
 namespace OOP_LAB
 {
-    public partial class ProfileScreen : Form
+    public partial class ProfileScreen : Form //Kullanıcının kendi verilerini düzenleyebildiği profil ekranıdır.
     {
         SHA256Managed sha256 = new SHA256Managed();
         public ProfileScreen()
@@ -28,7 +28,7 @@ namespace OOP_LAB
             txt_email_profile.Text = LoginUser.getInstance().User.Email;
         }
 
-        private void btn_saveprofile_Click(object sender, EventArgs e)
+        private void btn_saveprofile_Click(object sender, EventArgs e) //Kullanıcının kendi verilerini düzenlemesi sonrası verilerin kaydedilmesini sağlayan fonksiyondur.
         {
             byte[] bitDizisi2 = System.Text.Encoding.UTF8.GetBytes(currentpassword.Text);
             string sifreliVeri2 = Convert.ToBase64String(sha256.ComputeHash(bitDizisi2));
@@ -56,7 +56,8 @@ namespace OOP_LAB
                             LoginPage.UserList[i].Password = sifreliVeri;
                         }
 
-                        Util.SaveCsv(LoginPage.UserList);
+                        databaseprocess databaseprocess = new databaseprocess();
+                        databaseprocess.updatedata(LoginPage.UserList[i]);
 
                     }
                 }

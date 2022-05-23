@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace OOP_LAB
 {
-    public class LoginUser
+    public class LoginUser //Giriş yapmış olan kullanıcının verilerini tutan sınıftır.
     {
         private int index;
         private User user;
