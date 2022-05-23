@@ -2,7 +2,7 @@ using System.Security.Cryptography;
 
 namespace OOP_LAB
 {
-    public partial class LoginPage : Form
+    public partial class LoginPage : Form //Kullanýcý giriþi yapýlan formdur.
     {
         public static List<User> UserList = new List<User>();
         public static string UserFilePath = @"data/data.csv";
@@ -13,7 +13,9 @@ namespace OOP_LAB
 
         {
             InitializeComponent();
-            Util.LoadCsv(UserList, UserFilePath);
+            databaseprocess databaseprocess = new databaseprocess();
+            databaseprocess.clonedata(UserList);
+
             txtUsername.Text = Settings.Default.lastuser;
         }
 
@@ -76,14 +78,14 @@ namespace OOP_LAB
 
         }
 
-        private void btn_signup_Click(object sender, EventArgs e)
+        private void btn_signup_Click(object sender, EventArgs e) //Kullanýcýyý sign up formuna gönderir.
         {
             SignUp signup = new SignUp();
             signup.ShowDialog();
 
         }
 
-        private void Goster_CheckedChanged(object sender, EventArgs e)
+        private void Goster_CheckedChanged(object sender, EventArgs e) //Girilen þifrenin "göster" checkbox u ile gizlenip gösterilmesini saðlar.
         {
 
             if (Goster.Checked == true)
@@ -96,7 +98,7 @@ namespace OOP_LAB
             }
         }
 
-        private void txtUsername_KeyPress(object sender, KeyPressEventArgs e)
+        private void txtUsername_KeyPress(object sender, KeyPressEventArgs e) //Username kýsmýna sadece char karakter girilebilmesini saðlar.
         {
             e.Handled = !char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar)
 

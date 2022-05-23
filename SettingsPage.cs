@@ -21,7 +21,7 @@ namespace OOP_LAB
         public SettingsPage()
         {
             InitializeComponent();
-            Difficulty = Settings.Default.Difficulty;
+            Difficulty = LoginUser.getInstance().User.Difficultysetting;
             switch (Difficulty) //Kaydedilen ayarlar kayıt alanından alınarak uygulamaya eklenir.
             {
                 case "easy":
@@ -261,7 +261,11 @@ namespace OOP_LAB
             }
             else
             {
-                Settings.Default.Difficulty = Difficulty;
+                LoginUser.getInstance().User.Difficultysetting = Difficulty;
+
+                databaseprocess databaseprocess = new databaseprocess();
+                databaseprocess.updatedata(LoginUser.getInstance().User);
+                //Settings.Default.Difficulty = Difficulty;
                 Settings.Default.customint1 = int1;
                 Settings.Default.customint2 = int2;
                 Settings.Default.square = chk1;

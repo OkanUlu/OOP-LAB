@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Media;
 
 namespace OOP_LAB
 {
@@ -27,33 +28,37 @@ namespace OOP_LAB
         List<int> scoredots = new List<int>();
         int scorerule;
         String difficulty;
+        System.Media.SoundPlayer gamesound = new System.Media.SoundPlayer("../../../music/oyun.wav");
+        System.Media.SoundPlayer scoresound = new System.Media.SoundPlayer("../../../music/scoree.wav");
+        
+        
+        
         public MainPage()
         {           
-            InitializeComponent();  
+            InitializeComponent();
+            label3.Text = LoginUser.getInstance().User.Maxscore.ToString();//YOUR BEST SCORE alanını doldurur.
+            
+
         }
         private void button1_Click(object sender, EventArgs e)//settings ekranına geçişi sağlar.
         {
             SettingsPage settings = new SettingsPage();           
-            settings.Show();            
+            settings.Show();
+            
         }
         public void Page_Refresh()
         {
             this.Hide();
         }
-        private void MainPage_Load(object sender, EventArgs e)
+        private void MainPage_Load(object sender, EventArgs e) //Oyunun hazır hale gelmesi için zorluk,seçimler gibi ayarlar gerekli yerlerden çekilir.
         {
             for(int i= 0; i < 400; i++)
             {
                 lblcheck[i] = "empty";
             }
-            if (Settings.Default.Difficulty == null)
-            {
-                difficulty = "easy";
-            }
-            else
-            {
-                difficulty = Settings.Default.Difficulty;
-            }
+
+                difficulty = LoginUser.getInstance().User.Difficultysetting;
+            
             switch (difficulty)
             {
                 case "easy":
@@ -97,7 +102,7 @@ namespace OOP_LAB
             color_object_selector();
             randompicker();
         }
-        void ButtonArray_click(object sender, EventArgs e)
+        void ButtonArray_click(object sender, EventArgs e) //Dinamik butonların çalışma mekanizmasıdır.
         {
             PaintEraser();
             Button btn_now = sender as Button;
@@ -109,7 +114,8 @@ namespace OOP_LAB
             }
             else
             {
-                if(temp != "empty")
+                gamesound.Play();
+                if (temp != "empty")
                 {
                     lblcheck[tempnum] = "empty";
                     btn[tempnum].Image = default;
@@ -120,15 +126,19 @@ namespace OOP_LAB
                         {
                             break;
                         }
-                        if (roadsave[i] == roadsave[i + 2])
+                        if(roadsave.Count > 1)
                         {
-                            roadsave.RemoveAt(i+2);
+                            if (roadsave[i] == roadsave[i + 2])
+                            {
+                                roadsave.RemoveAt(i + 2);
+                            }
                         }
+                       
                     }
                         for (int i = 0; i < roadsave.Count; i++)
                     {
                         Task.Delay(1000).Wait();
-                        btn[roadsave[i]].Image = Image.FromFile("IMAGES/" + temp + ".png");
+                        btn[roadsave[i]].Image = Image.FromFile("../../../IMAGES/" + temp + ".png");
                         if (i != 0)
                         {
                             btn[roadsave[i - 1]].Image = default;
@@ -141,17 +151,17 @@ namespace OOP_LAB
             GameScoreEngine();
             GameFinisher();
         }
-        private void btn_profilescreen_Click(object sender, EventArgs e)
+        private void btn_profilescreen_Click(object sender, EventArgs e) //Profil ekranına gönderir.
         {
             ProfileScreen profileScreen = new ProfileScreen();
             profileScreen.ShowDialog();
         }
-        private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e) //about ekranına gönderir.
         {
             AboutScreen about = new AboutScreen();
             about.ShowDialog();
         }
-        private void color_object_selector()
+        private void color_object_selector() //Oyunda kullanılmak için kullanıcının seçtiği objeleri ayarlist e ekler.
         {
             SettingsPage settings = new SettingsPage();
             if (settings.chk1)
@@ -201,7 +211,7 @@ namespace OOP_LAB
                     break;
             }
         }
-        private void randompicker()
+        private void randompicker() //random 3 adet şekil ataması yapar.
         {
             for(int b = 0; b < 3; b++)
             {
@@ -224,15 +234,15 @@ namespace OOP_LAB
                                 switch (selected_objects[obj])
                                 {
                                     case "square":
-                                        btn[rand].Image = Image.FromFile("IMAGES/bluesquare.png");
+                                        btn[rand].Image = Image.FromFile("../../../IMAGES/bluesquare.png");
                                         lblcheck[rand] = "bluesquare";
                                         break;
                                     case "triangle":
-                                        btn[rand].Image = Image.FromFile("IMAGES/bluetriangle.png");
+                                        btn[rand].Image = Image.FromFile("../../../IMAGES/bluetriangle.png");
                                         lblcheck[rand] = "bluetriangle";
                                         break;
                                     case "circle":
-                                        btn[rand].Image = Image.FromFile("IMAGES/bluecircle.png");
+                                        btn[rand].Image = Image.FromFile("../../../IMAGES/bluecircle.png");
                                         lblcheck[rand] = "bluecircle";
                                         break;
                                 }
@@ -241,15 +251,15 @@ namespace OOP_LAB
                                 switch (selected_objects[obj])
                                 {
                                     case "square":
-                                        btn[rand].Image = Image.FromFile("IMAGES/purplesquare.png");
+                                        btn[rand].Image = Image.FromFile("../../../IMAGES/purplesquare.png");
                                         lblcheck[rand] = "purplesquare";
                                         break;
                                     case "triangle":
-                                        btn[rand].Image = Image.FromFile("IMAGES/purpletriangle.png");
+                                        btn[rand].Image = Image.FromFile("../../../IMAGES/purpletriangle.png");
                                         lblcheck[rand] = "purpletriangle";
                                         break;
                                     case "circle": 
-                                        btn[rand].Image = Image.FromFile("IMAGES/purplecircle.png");
+                                        btn[rand].Image = Image.FromFile("../../../IMAGES/purplecircle.png");
                                         lblcheck[rand] = "purplecircle";
                                         break;
                                 }
@@ -258,15 +268,15 @@ namespace OOP_LAB
                                 switch (selected_objects[obj])
                                 {
                                     case "square":
-                                        btn[rand].Image = Image.FromFile("IMAGES/orangesquare.png");
+                                        btn[rand].Image = Image.FromFile("../../../IMAGES/orangesquare.png");
                                         lblcheck[rand] = "orangesquare";
                                         break;
                                     case "triangle":
-                                        btn[rand].Image = Image.FromFile("IMAGES/orangetriangle.png");
+                                        btn[rand].Image = Image.FromFile("../../../IMAGES/orangetriangle.png");
                                         lblcheck[rand] = "orangetriangle";
                                         break;
                                     case "circle":
-                                        btn[rand].Image = Image.FromFile("IMAGES/orangecircle.png");
+                                        btn[rand].Image = Image.FromFile("../../../IMAGES/orangecircle.png");
                                         lblcheck[rand] = "orangecircle";
                                         break;
                                 }
@@ -278,9 +288,11 @@ namespace OOP_LAB
                 }
             }
         }
-        private void roadscribe(int number)
+        private void roadscribe(int number) //Şekillerin üstünden geçmeden izlenecek yolu hesaplar ve yeşil renge boyar.
         {
+            
             PaintEraser();
+            
             int x = tempnum % row;
             int y = (tempnum-x) / row;
             int goalx = number % row;
@@ -462,7 +474,7 @@ namespace OOP_LAB
                 }
                 
             }
-        }
+        } //Roadscribe için yol çizilmesi gereken butonun konumunu alır ve gönderir.
         private void PaintEraser()
         {
             Task.Delay(0);
@@ -470,8 +482,8 @@ namespace OOP_LAB
             {
                 btn[painteddots[iN]].BackColor = SystemColors.Control;
             }
-        }
-        private void GameScoreEngine()
+        } //objen taşınma esnasında objenin gideceği renkli yolun silimini yapar.
+        private void GameScoreEngine() //Oyunun puanlandırma mekanizmasını çalıştırır.
         {
             for(int iN = 0;iN < col; iN++)
             {
@@ -482,6 +494,13 @@ namespace OOP_LAB
                         int sc = int.Parse(scorelbl.Text.ToString());
                         sc += scorerule;
                         scorelbl.Text = sc.ToString();
+                        scoresound.Play();
+                        if (sc > LoginUser.getInstance().User.Maxscore)
+                        {
+                            LoginUser.getInstance().User.Maxscore = sc;
+                            databaseprocess databaseprocess = new databaseprocess();
+                            databaseprocess.updatedata(LoginUser.getInstance().User);
+                        }
                         for(int j = i; j < 5 + i; j++)
                         {
                             btn[iN * row + j].Image = default;
@@ -499,6 +518,13 @@ namespace OOP_LAB
                         int sca = int.Parse(scorelbl.Text.ToString());
                         sca += scorerule;
                         scorelbl.Text = sca.ToString();
+                        scoresound.Play();
+                        if (sca > LoginUser.getInstance().User.Maxscore)
+                        {
+                            LoginUser.getInstance().User.Maxscore = sca;
+                            databaseprocess databaseprocess = new databaseprocess();
+                            databaseprocess.updatedata(LoginUser.getInstance().User);
+                        }
                         for (int j = i; j < 5 + i; j++)
                         {
                            btn[j * row + iN].Image = default;
@@ -509,7 +535,8 @@ namespace OOP_LAB
 
             }
         }     
-        private void GameFinisher()
+
+        private void GameFinisher() //Eeğer yeterli boşluk kalmadıysa oyunu sonlandırır.
         {
             int finisher = 0;
             for(int i = 0; i < 400; i++)
@@ -526,11 +553,5 @@ namespace OOP_LAB
                 Environment.Exit(0);
             }
         }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Form1 aboutScreen = new Form1();
-            aboutScreen.ShowDialog();
         }
     }
