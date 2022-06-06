@@ -7,12 +7,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Media;
+using System.Net;
+using System.Net.Sockets;
 
 namespace OOP_LAB
 {
-    public partial class MainPage : Form
+    public partial class Multiplayergame : Form
     {
+        public static int myturn = 0;
+        int turn;
+        string str;
+        string[] receivedlblcheck = new string[400];
+        string socketsendmessage;
+        public static bool ishost;
         public string[] selected_colors = new string[3];
         public string[] selected_objects = new string[3];
         public int row = 0, col = 0;
@@ -30,35 +37,144 @@ namespace OOP_LAB
         String difficulty;
         System.Media.SoundPlayer gamesound = new System.Media.SoundPlayer("../../../music/oyun.wav");
         System.Media.SoundPlayer scoresound = new System.Media.SoundPlayer("../../../music/scoree.wav");
+        private Socket socket;
+        private Socket ClientSocket;
+        public static IPAddress ipaddress;
+        public static int port;
         
+        Socket soket;
+        NetworkStream stream;
+        TcpListener tcpListener = new TcpListener(IPAddress.Any,47132);
+        databaseprocess databs = new databaseprocess();
         
-        
-        public MainPage()
-        {           
+
+
+        public Multiplayergame()
+        {
+            Control.CheckForIllegalCrossThreadCalls = false;
             InitializeComponent();
             label3.Text = LoginUser.getInstance().User.Maxscore.ToString();//YOUR BEST SCORE alanını doldurur.
-            
 
+        }
+        private void soketdinle()
+        {
+            databs.turncloner();
+
+            byte[] data = new byte[4000];
+            if (ishost)
+            {
+                if(turn == myturn)
+                {
+                    while (true)
+                    {
+                        int numBytesRead = stream.Read(data, 0, data.Length);
+                        if (numBytesRead > 0)
+                        {
+                            str = Encoding.ASCII.GetString(data, 0, numBytesRead);
+                            receivedlblcheck = str.Split(",");
+
+                            for (int i = 0; i < lblcheck.Length; i++)
+                            {
+                                lblcheck[i] = receivedlblcheck[i];
+                            }
+                            myturn++;
+                            databs.turnupdater();
+                            UnFreezeButtons();
+                            Page_Refresh();
+                        }
+                    }
+                }
+                
+            }
+            else
+            {
+                if(turn == myturn)
+                {
+                    while (true)
+                    {
+                        int numBytesRead = stream.Read(data, 0, data.Length);
+                        if (numBytesRead > 0)
+                        {
+                            str = Encoding.ASCII.GetString(data, 0, numBytesRead);
+                            receivedlblcheck = str.Split(",");
+
+                            for (int i = 0; i < lblcheck.Length; i++)
+                            {
+                                lblcheck[i] = receivedlblcheck[i];
+                            }
+                            UnFreezeButtons();
+                            Page_Refresh();
+                        }
+                    }
+                }
+                
+            }
+            
         }
         private void button1_Click(object sender, EventArgs e)//settings ekranına geçişi sağlar.
         {
-            SettingsPage settings = new SettingsPage();           
+            SettingsPage settings = new SettingsPage();
             settings.Show();
-            
+
         }
         public void Page_Refresh()
         {
-            this.Hide();
-        }
-        private void MainPage_Load(object sender, EventArgs e) //Oyunun hazır hale gelmesi için zorluk,seçimler gibi ayarlar gerekli yerlerden çekilir.
+            for (int i = 0; i < row*col; i++)
+            {
+                switch (lblcheck[i])
+                {
+                    case "empty":
+                        btn[i].Image = default;
+                        break;
+                    case "bluesquare":
+                        btn[i].Image = Image.FromFile("../../../IMAGES/bluesquare.png");
+
+                        break;
+                    case "bluetriangle":
+                        btn[i].Image = Image.FromFile("../../../IMAGES/bluetriangle.png");
+
+                        break;
+                    case "bluecircle":
+                        btn[i].Image = Image.FromFile("../../../IMAGES/bluecircle.png");
+
+                        break;
+                    case "purplesquare":
+                        btn[i].Image = Image.FromFile("../../../IMAGES/purplesquare.png");
+
+                        break;
+                    case "purpletriangle":
+                        btn[i].Image = Image.FromFile("../../../IMAGES/purpletriangle.png");
+
+                        break;
+                    case "purplecircle":
+                        btn[i].Image = Image.FromFile("../../../IMAGES/purplecircle.png");
+
+                        break;
+                    case "orangesquare":
+                        btn[i].Image = Image.FromFile("../../../IMAGES/orangesquare.png");
+
+                        break;
+                    case "orangetriangle":
+                        btn[i].Image = Image.FromFile("../../../IMAGES/orangetriangle.png");
+
+                        break;
+                    case "orangecircle":
+                        btn[i].Image = Image.FromFile("../../../IMAGES/orangecircle.png");
+
+                        break;
+                }
+
+            }
+           }
+        private void Multiplayergame_Load(object sender, EventArgs e) //Oyunun hazır hale gelmesi için zorluk,seçimler gibi ayarlar gerekli yerlerden çekilir.
         {
-            for(int i= 0; i < 400; i++)
+            for (int i = 0; i < 400; i++)
             {
                 lblcheck[i] = "empty";
             }
 
-                difficulty = LoginUser.getInstance().User.Difficultysetting;
-            
+            difficulty = LoginUser.getInstance().User.Difficultysetting;
+
             switch (difficulty)
             {
                 case "easy":
@@ -82,16 +198,16 @@ namespace OOP_LAB
                     scorerule = 2;
                     break;
             }
-            
-            int number=0;
+
+            int number = 0;
             for (int j = 0; j < col; j++)
             {
                 for (int i = 0; i < row; i++)
                 {
                     btn[number] = new Button();
-                    btn[number].Name =  number.ToString();
+                    btn[number].Name = number.ToString();
                     btn[number].Size = new Size(35, 35);
-                    btn[number].Location = new Point(35*j, 35 * i);
+                    btn[number].Location = new Point(35 * j, 35 * i);
                     btn[number].BackColor = SystemColors.Control;
                     btn[number].Click += new EventHandler(ButtonArray_click);
                     btn[number].MouseEnter += new EventHandler(ButtonArray_MouseEnter);
@@ -100,7 +216,131 @@ namespace OOP_LAB
                 }
             }
             color_object_selector();
-            randompicker();
+
+            
+
+            if (ishost)
+            {
+
+                tcpListener = new TcpListener(1453);
+                tcpListener.Start();
+                soket = tcpListener.AcceptSocket();
+                stream = new NetworkStream(soket);
+                Thread dinle = new Thread(soketdinle);
+                dinle.Start();
+
+            }
+            else
+            {
+
+                randompicker();
+                IPEndPoint localEndPoint = new IPEndPoint(ipaddress, port);
+
+                socket = new Socket(ipaddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
+                socket.Connect(localEndPoint);
+
+                socketsendmessage = "";
+
+                for (int i = 0; i < lblcheck.Length; i++)
+                {
+                    socketsendmessage += lblcheck[i] + ",";
+                }
+                byte[] sendbytei = new byte[4000];
+                sendbytei = Encoding.Default.GetBytes(socketsendmessage);
+
+                socket.Send(sendbytei);
+                //socket.Close();
+
+                tcpListener = new TcpListener(80);
+                tcpListener.Start();
+                //soket = tcpListener.AcceptSocket();
+
+                stream = new NetworkStream(socket);
+                Thread dinle = new Thread(soketdinle);
+                dinle.Start();
+
+
+
+
+
+            }
+
+        }
+
+        private void Sendlbl()
+        {
+            socketsendmessage = "";
+            if (ishost)
+            {
+                for (int i = 0; i < lblcheck.Length; i++)
+                {
+                    socketsendmessage += lblcheck[i] + ",";
+                }
+                byte[] sendbyte = new byte[2048];
+                sendbyte = Encoding.Default.GetBytes(socketsendmessage);
+
+                soket.Send(sendbyte);
+                FreezeButtons();
+            }
+            else
+            {
+                for (int i = 0; i < lblcheck.Length; i++)
+                {
+                    socketsendmessage += lblcheck[i] + ",";
+                }
+                byte[] sendbyte = new byte[4000];
+                sendbyte = Encoding.Default.GetBytes(socketsendmessage);
+
+                socket.Send(sendbyte);
+                FreezeButtons();
+            }
+            
+
+        }
+        private void Receivelbl()
+        {
+            
+            byte[] buffer3 = new byte[2048];
+            
+            int numberofbytesreceived = socket.Receive(buffer3);
+            byte[] receivedbytes = new byte[numberofbytesreceived];
+            Array.Copy(buffer3, receivedbytes, numberofbytesreceived);
+            string receivedmessage = Encoding.Default.GetString(receivedbytes);
+
+            receivedlblcheck = receivedmessage.Split(',');
+
+
+            for (int i = 0; i < receivedlblcheck.Length; i++)
+            {
+                lblcheck[i] = receivedlblcheck[i];
+            }
+
+            Page_Refresh();
+            
+            
+        }//KULLANIM DIŞI
+        private void FreezeButtons()
+        {
+            for (int i = 0; i < row*col; i++)
+            {
+                
+               btn[i].Enabled = false;
+                label4.Text = "rakibin sırası";
+                
+            }
+        }
+        private void UnFreezeButtons()
+        {
+
+            for (int i = 0; i < row*col; i++)
+            {
+
+                btn[i].Enabled = true;
+                label4.Text = "sizin sıranız";
+
+            }
+
+
         }
         void ButtonArray_click(object sender, EventArgs e) //Dinamik butonların çalışma mekanizmasıdır.
         {
@@ -122,20 +362,20 @@ namespace OOP_LAB
                     lblcheck[num] = temp;
                     for (int i = 0; i < roadsave.Count; i++)
                     {
-                        if(i == roadsave.Count - 2)
+                        if (i == roadsave.Count - 2)
                         {
                             break;
                         }
-                        if(roadsave.Count > 1)
+                        if (roadsave.Count > 1)
                         {
                             if (roadsave[i] == roadsave[i + 2])
                             {
                                 roadsave.RemoveAt(i + 2);
                             }
                         }
-                       
+
                     }
-                        for (int i = 0; i < roadsave.Count; i++)
+                    for (int i = 0; i < roadsave.Count; i++)
                     {
                         Task.Delay(1000).Wait();
                         btn[roadsave[i]].Image = Image.FromFile("../../../IMAGES/" + temp + ".png");
@@ -146,6 +386,11 @@ namespace OOP_LAB
                     }
                     temp = "empty";
                     randompicker();
+                    GameScoreEngine();
+
+                    Sendlbl();
+                    
+                    
                 }
             }
             GameScoreEngine();
@@ -187,33 +432,33 @@ namespace OOP_LAB
             if (settings.chk6)
             {
                 arrayadder("colors", "orange");
-            } 
+            }
         }
-        private void arrayadder(String arr,string str)
+        private void arrayadder(String arr, string str)
         {
             switch (arr)
             {
                 case "colors":
 
-                        selected_colors[clrselect] = str;
-                        flag1 = clrselect;
-                        clrselect++;
-                        break;
-                    
+                    selected_colors[clrselect] = str;
+                    flag1 = clrselect;
+                    clrselect++;
+                    break;
+
                     break;
 
                 case "objects":
-                            selected_objects[objselect] = str;
-                            flag2 = objselect;
-                            objselect++;
-                            break;
-                   
+                    selected_objects[objselect] = str;
+                    flag2 = objselect;
+                    objselect++;
+                    break;
+
                     break;
             }
         }
         private void randompicker() //random 3 adet şekil ataması yapar.
         {
-            for(int b = 0; b < 3; b++)
+            for (int b = 0; b < 3; b++)
             {
                 for (int a = 0; ; a++)
                 {
@@ -221,10 +466,10 @@ namespace OOP_LAB
                     int rand = random.Next(row * col);
 
                     Random randcolor = new Random();
-                    int obj = random.Next(0,flag2+1);
+                    int obj = random.Next(0, flag2 + 1);
 
                     Random randobj = new Random();
-                    int clr = random.Next(0,flag1+1);
+                    int clr = random.Next(0, flag1 + 1);
 
                     if (lblcheck[rand] == "empty")
                     {
@@ -258,7 +503,7 @@ namespace OOP_LAB
                                         btn[rand].Image = Image.FromFile("../../../IMAGES/purpletriangle.png");
                                         lblcheck[rand] = "purpletriangle";
                                         break;
-                                    case "circle": 
+                                    case "circle":
                                         btn[rand].Image = Image.FromFile("../../../IMAGES/purplecircle.png");
                                         lblcheck[rand] = "purplecircle";
                                         break;
@@ -280,30 +525,34 @@ namespace OOP_LAB
                                         lblcheck[rand] = "orangecircle";
                                         break;
                                 }
+                                
                                 break;
                         }
+                        Page_Refresh();
                         break;
-                    }
                     
+                    }
+                 
                 }
             }
+        
         }
         private void roadscribe(int number) //Şekillerin üstünden geçmeden izlenecek yolu hesaplar ve yeşil renge boyar.
         {
-            
+
             PaintEraser();
-            
+
             int x = tempnum % row;
-            int y = (tempnum-x) / row;
+            int y = (tempnum - x) / row;
             int goalx = number % row;
             int goaly = (number - goalx) / row;
             roadsave.Clear();
-           
-            for (int i = 0;i<100 ; i++)
+
+            for (int i = 0; i < 100; i++)
             {
                 Random random = new Random();
                 int rand = random.Next(2);
-                if(lblcheck[goaly * row + goalx] != "empty")
+                if (lblcheck[goaly * row + goalx] != "empty")
                 {
                     break;
                 }
@@ -335,7 +584,7 @@ namespace OOP_LAB
                     {
                         if (lblcheck[y * row + x + 1] != "empty")
                         {
-                            if(y != 0)
+                            if (y != 0)
                             {
                                 if (lblcheck[(y - 1) * row + x] == "empty")
                                 {
@@ -357,7 +606,7 @@ namespace OOP_LAB
                 {
                     if (y > goaly)
                     {
-                        if (lblcheck[(y-1) * row + x] != "empty")
+                        if (lblcheck[(y - 1) * row + x] != "empty")
                         {
                             if (lblcheck[y * row + x + 1] == "empty")
                             {
@@ -366,30 +615,30 @@ namespace OOP_LAB
                             else
                             {
                                 x -= 1;
-                            }     
+                            }
                         }
                         else
                         {
                             y -= 1;
                         }
                     }
-                        else if (y < goaly)
+                    else if (y < goaly)
+                    {
+                        if (lblcheck[(y + 1) * row + x] != "empty")
                         {
-                            if (lblcheck[(y+1) * row + x] != "empty")
+                            if (lblcheck[y * row + x - 1] == "empty")
                             {
-                             if (lblcheck[y * row + x - 1] == "empty")
-                                {
-                                   x -= 1;
-                             }
-                             else if(lblcheck[y * row + x + 1] == "empty")
-                            {
-                                 x += 1;
-                                }
-                        }
-                            else if (lblcheck[(y + 1) * row + x] == "empty")
-                        {
-                             y += 1;
+                                x -= 1;
                             }
+                            else if (lblcheck[y * row + x + 1] == "empty")
+                            {
+                                x += 1;
+                            }
+                        }
+                        else if (lblcheck[(y + 1) * row + x] == "empty")
+                        {
+                            y += 1;
+                        }
                     }
                 }
 
@@ -416,14 +665,14 @@ namespace OOP_LAB
                     {
                         if (y > goaly)
                         {
-                            if(y == 1)
+                            if (y == 1)
                             {
                                 continue;
                             }
-                                if (lblcheck[(y - 1) * (row) - x] == "empty")
-                                {
-                                    y -= 1;
-                                }  
+                            if (lblcheck[(y - 1) * (row) - x] == "empty")
+                            {
+                                y -= 1;
+                            }
                         }
                         else if (y < goaly)
                         {
@@ -431,7 +680,7 @@ namespace OOP_LAB
                             {
                                 continue;
                             }
-                            if (y!= 0)
+                            if (y != 0)
                             {
                                 if (lblcheck[(y + 1) * (row) + x] == "empty")
                                 {
@@ -441,7 +690,7 @@ namespace OOP_LAB
                         }
                     }
                 }
-                   
+
                 int paint = y * row + x;
                 roadsave.Add(paint);
                 btn[paint].BackColor = Color.Green;
@@ -451,7 +700,7 @@ namespace OOP_LAB
                     break;
                 }
 
-                if (lblcheck[goaly*row + goalx] != "empty" )
+                if (lblcheck[goaly * row + goalx] != "empty")
                 {
                     PaintEraser();
                     break;
@@ -472,7 +721,7 @@ namespace OOP_LAB
                 {
                     PaintEraser();
                 }
-                
+
             }
         } //Roadscribe için yol çizilmesi gereken butonun konumunu alır ve gönderir.
         private void PaintEraser()
@@ -483,13 +732,22 @@ namespace OOP_LAB
                 btn[painteddots[iN]].BackColor = SystemColors.Control;
             }
         } //objen taşınma esnasında objenin gideceği renkli yolun silimini yapar.
+
+        private void Formclosed(object sender, FormClosedEventArgs e)
+        {
+            databaseprocess data = new databaseprocess();
+            data.turnzero();
+        }
+
+       
+
         private void GameScoreEngine() //Oyunun puanlandırma mekanizmasını çalıştırır.
         {
-            for(int iN = 0;iN < col; iN++)
+            for (int iN = 0; iN < col; iN++)
             {
                 for (int i = 0; i < row - 4; i++)
                 {
-                    if(lblcheck[iN*row + i] == lblcheck[iN * row + i+1] && lblcheck[iN * row + i + 1]== lblcheck[iN * row + i + 2]&& lblcheck[iN * row + i + 2]== lblcheck[iN * row + i + 3]&& lblcheck[iN * row + i + 3]== lblcheck[iN * row + i + 4]&& lblcheck[iN * row + i + 4] !="empty")
+                    if (lblcheck[iN * row + i] == lblcheck[iN * row + i + 1] && lblcheck[iN * row + i + 1] == lblcheck[iN * row + i + 2] && lblcheck[iN * row + i + 2] == lblcheck[iN * row + i + 3] && lblcheck[iN * row + i + 3] == lblcheck[iN * row + i + 4] && lblcheck[iN * row + i + 4] != "empty")
                     {
                         int sc = int.Parse(scorelbl.Text.ToString());
                         sc += scorerule;
@@ -501,7 +759,7 @@ namespace OOP_LAB
                             databaseprocess databaseprocess = new databaseprocess();
                             databaseprocess.updatedata(LoginUser.getInstance().User);
                         }
-                        for(int j = i; j < 5 + i; j++)
+                        for (int j = i; j < 5 + i; j++)
                         {
                             btn[iN * row + j].Image = default;
                             lblcheck[iN * row + j] = "empty";
@@ -513,7 +771,7 @@ namespace OOP_LAB
             {
                 for (int i = 0; i < col - 4; i++)
                 {
-                    if(lblcheck[i*row + iN]== lblcheck[(i+1) * row + iN]&& lblcheck[(i + 1) * row + iN] == lblcheck[(i + 2) * row + iN]&& lblcheck[(i + 2) * row + iN]== lblcheck[(i + 3) * row + iN]&& lblcheck[(i + 3) * row + iN] == lblcheck[(i + 4) * row + iN]&& lblcheck[(i + 4) * row + iN]!="empty")
+                    if (lblcheck[i * row + iN] == lblcheck[(i + 1) * row + iN] && lblcheck[(i + 1) * row + iN] == lblcheck[(i + 2) * row + iN] && lblcheck[(i + 2) * row + iN] == lblcheck[(i + 3) * row + iN] && lblcheck[(i + 3) * row + iN] == lblcheck[(i + 4) * row + iN] && lblcheck[(i + 4) * row + iN] != "empty")
                     {
                         int sca = int.Parse(scorelbl.Text.ToString());
                         sca += scorerule;
@@ -527,24 +785,24 @@ namespace OOP_LAB
                         }
                         for (int j = i; j < 5 + i; j++)
                         {
-                           btn[j * row + iN].Image = default;
-                           lblcheck[j * row + iN] = "empty";
-                         }
+                            btn[j * row + iN].Image = default;
+                            lblcheck[j * row + iN] = "empty";
+                        }
                     }
                 }
 
             }
-        }     
+        }
 
         private void GameFinisher() //Eeğer yeterli boşluk kalmadıysa oyunu sonlandırır.
         {
             int finisher = 0;
-            for(int i = 0; i < 400; i++)
+            for (int i = 0; i < 400; i++)
             {
                 if (lblcheck[i] != "empty")
                 {
                     finisher++;
-                }               
+                }
             }
             if (finisher > (row) * (col) - 3)
             {
@@ -553,5 +811,5 @@ namespace OOP_LAB
                 Environment.Exit(0);
             }
         }
-        }
     }
+}

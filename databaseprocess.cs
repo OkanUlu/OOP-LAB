@@ -9,7 +9,7 @@ namespace OOP_LAB
 {
     public class databaseprocess //database işlemlerini yapar.
     {
-        SqlConnection connection = new SqlConnection("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=Okandb;Integrated Security=True");
+        SqlConnection connection = new SqlConnection("workstation id=okanulu.mssql.somee.com;packet size=4096;user id=okan141411_SQLLogin_1;pwd=zbo7epetb7;data source=okanulu.mssql.somee.com;persist security info=False;initial catalog=okanulu");
 
 
 
@@ -103,6 +103,45 @@ namespace OOP_LAB
                 userlist.Add(new User(username, password, namesurname, phonenumber, address, city, country, email, maxscore,difficulty));
             }
             connection.Close();
+        }
+        public void turnupdater()
+        {
+            String str = "UPDATE UserData SET turn = @turn WHERE [user] = @user";
+            SqlCommand komut = new SqlCommand(str, connection);
+            komut.Parameters.AddWithValue("@user", "admin");
+
+            komut.Parameters.AddWithValue("@turn", Multiplayergame.myturn);
+
+            openconnection();
+            komut.ExecuteNonQuery();
+            closeconnection();
+        }
+        public void turncloner()
+        {
+            
+            connection.Open();
+            SqlCommand komut = new SqlCommand("SELECT turn FROM UserData where phone ='5522754330'", connection);
+            SqlDataReader read = komut.ExecuteReader();
+            while (read.Read())
+            {
+
+                Multiplayergame.myturn = int.Parse(read[0].ToString());
+                
+                
+            }
+            connection.Close();
+        }
+        public void turnzero()
+        {
+            String str = "UPDATE UserData SET turn = @turn WHERE [user] = @user";
+            SqlCommand komut = new SqlCommand(str, connection);
+            komut.Parameters.AddWithValue("@user", "admin");
+
+            komut.Parameters.AddWithValue("@turn", 0);
+
+            openconnection();
+            komut.ExecuteNonQuery();
+            closeconnection();
         }
     }
 }
