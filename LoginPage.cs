@@ -50,10 +50,12 @@ namespace OOP_LAB
                     Settings.Default.lastuser = Username;
                     Settings.Default.Save();
 
-                    MainPage main = new MainPage();
+                    //MainPage main = new MainPage();
+                    //Multiplayergame multigame = new Multiplayergame();
                     // this.Hide();
                     a = 1;
-                    main.ShowDialog();
+                    Gameselector game = new Gameselector();
+                    game.ShowDialog();
                     
 
                     LblLoginMessage.Visible = false;
